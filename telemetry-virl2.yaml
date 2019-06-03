@@ -1,0 +1,183 @@
+lab:
+  description: Imported from test_t.yaml
+  notes: ''
+  timestamp: 1559572659.674176
+  title: test_t
+  version: 0.0.2
+nodes:
+  - id: n1
+    label: clus-test
+    node_definition: ubuntu
+    x: -700
+    y: -350
+    configuration: |-
+      #cloud-config
+      hostname: telemetry-clus-test
+      user: developer
+      password: C1sco12345
+      groups: root
+      chpasswd: { expire: False }
+      package_update: False
+      ssh_pwauth: True
+
+      disk_setup:
+        /dev/vdb:
+          table_type: 'mbr'
+          layout:
+            - 100
+          overwrite: true
+
+      fs_setup:
+        - label: data_volume
+          filesystem: ext3
+          device: /dev/vdb1
+
+
+      groups:
+        - docker
+
+      # Add users to the system. Users are added after groups are added.
+      users:
+        - name: developer
+          gecos: NetDevOps Developer
+          sudo: ALL=(ALL) NOPASSWD:ALL
+          groups: docker
+      packages:
+        - python3
+        - python3-pip
+        - python3-venv
+        # - default-jdk
+
+      write_files:
+        - content: |
+            # base python requirements
+            docker-compose
+          path: /home/developer/requirements.txt
+          owner: developer:developer
+
+      runcmd:
+        - sudo ifconfig enp0s2 up 10.10.90.101 netmask 255.255.255.0
+        - sudo route add default gw 10.10.90.254 dev enp0s2
+        - sudo chown -R developer:developer /home/developer
+        - sudo -u developer git clone https://github.com/chapeter/cl-telem-stack /home/developer/cl-telem-stack
+        - curl -fsSL https://get.docker.com -o get-docker.sh; sh get-docker.sh
+        - pip3 install -r /home/developer/requirements.txt
+    image_definition: ubuntu
+    tags: []
+    interfaces:
+      - id: i0
+        slot: 0
+        label: enp0s2
+        type: physical
+  - id: n2
+    label: oob
+    node_definition: unmanaged_switch
+    x: -400
+    y: -250
+    configuration: ''
+    tags: []
+    interfaces:
+      - id: i0
+        slot: 0
+        label: port0
+        type: physical
+      - id: i1
+        slot: 1
+        label: port1
+        type: physical
+      - id: i2
+        slot: 2
+        label: port2
+        type: physical
+  - id: n3
+    label: vlan-90
+    node_definition: external_connector
+    x: -250
+    y: -400
+    configuration: bridge0
+    tags: []
+    interfaces:
+      - id: i0
+        slot: 0
+        label: port
+        type: physical
+  - id: n0
+    label: clus-prod
+    node_definition: ubuntu
+    x: -750
+    y: -100
+    configuration: |-
+      #cloud-config
+      hostname: telemetry-clus-prod
+      user: developer
+      password: C1sco12345
+      groups: root
+      chpasswd: { expire: False }
+      package_update: False
+      ssh_pwauth: True
+
+      disk_setup:
+        /dev/vdb:
+          table_type: 'mbr'
+          layout:
+            - 100
+          overwrite: true
+
+      fs_setup:
+        - label: data_volume
+          filesystem: ext3
+          device: /dev/vdb1
+
+
+      groups:
+        - docker
+
+      # Add users to the system. Users are added after groups are added.
+      users:
+        - name: developer
+          gecos: NetDevOps Developer
+          sudo: ALL=(ALL) NOPASSWD:ALL
+          groups: docker
+      packages:
+        - python3
+        - python3-pip
+        - python3-venv
+        # - default-jdk
+
+      write_files:
+        - content: |
+            # base python requirements
+            docker-compose
+          path: /home/developer/requirements.txt
+          owner: developer:developer
+
+      runcmd:
+        - sudo ifconfig enp0s2 up 10.10.90.102 netmask 255.255.255.0
+        - sudo route add default gw 10.10.90.254 dev enp0s2
+        - sudo chown -R developer:developer /home/developer
+        - sudo -u developer git clone https://github.com/chapeter/cl-telem-stack /home/developer/cl-telem-stack
+        - curl -fsSL https://get.docker.com -o get-docker.sh; sh get-docker.sh
+        - pip3 install -r /home/developer/requirements.txt
+    image_definition: ubuntu
+    tags: []
+    interfaces:
+      - id: i0
+        slot: 0
+        label: enp0s2
+        type: physical
+links:
+  - id: l1
+    i1: i0
+    n1: n1
+    i2: i0
+    n2: n2
+  - id: l2
+    i1: i2
+    n1: n2
+    i2: i0
+    n2: n3
+  - id: l0
+    i1: i0
+    n1: n0
+    i2: i1
+    n2: n2
