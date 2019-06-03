@@ -28,7 +28,7 @@ services:
 
 
   grafana:
-    image: grafana/grafana:master
+    image: grafana/grafana:6.2.1
     volumes:
       - ./grafana/dashboards:/etc/grafana/dashboards
       - ./grafana/datasources:/etc/grafana/datasources
