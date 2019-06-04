@@ -17,7 +17,7 @@ nodes:
       password: C1sco12345
       groups: root
       chpasswd: { expire: False }
-      package_update: False
+      package_update: True
       ssh_pwauth: True
 
       disk_setup:
@@ -42,10 +42,12 @@ nodes:
           gecos: NetDevOps Developer
           sudo: ALL=(ALL) NOPASSWD:ALL
           groups: docker
+
       packages:
         - python3
         - python3-pip
-        - python3-venv
+        - docker
+        - make
         # - default-jdk
 
       write_files:
@@ -60,7 +62,6 @@ nodes:
         - sudo route add default gw 10.10.90.254 dev enp0s2
         - sudo chown -R developer:developer /home/developer
         - sudo -u developer git clone https://github.com/chapeter/cl-telem-stack /home/developer/cl-telem-stack
-        - curl -fsSL https://get.docker.com -o get-docker.sh; sh get-docker.sh
         - pip3 install -r /home/developer/requirements.txt
     image_definition: ubuntu
     tags: []
@@ -113,7 +114,7 @@ nodes:
       password: C1sco12345
       groups: root
       chpasswd: { expire: False }
-      package_update: False
+      package_update: True
       ssh_pwauth: True
 
       disk_setup:
@@ -138,10 +139,12 @@ nodes:
           gecos: NetDevOps Developer
           sudo: ALL=(ALL) NOPASSWD:ALL
           groups: docker
+
       packages:
         - python3
         - python3-pip
-        - python3-venv
+        - docker
+        - make
         # - default-jdk
 
       write_files:
@@ -156,7 +159,6 @@ nodes:
         - sudo route add default gw 10.10.90.254 dev enp0s2
         - sudo chown -R developer:developer /home/developer
         - sudo -u developer git clone https://github.com/chapeter/cl-telem-stack /home/developer/cl-telem-stack
-        - curl -fsSL https://get.docker.com -o get-docker.sh; sh get-docker.sh
         - pip3 install -r /home/developer/requirements.txt
     image_definition: ubuntu
     tags: []

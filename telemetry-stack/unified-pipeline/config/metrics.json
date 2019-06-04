@@ -177,5 +177,24 @@
 				}
 			]
 		}
+	},
+	{
+		"basepath": "show vrf",
+		"spec": {
+			"fields":[
+				{"name":"show vrf", "tag":true},
+				{"name":"", "fields":[
+					{"name":"TABLE_vrf", "fields":[
+						{"name":"", "fields":[
+							{"name":"ROW_vrf", "fields":[
+								{"name": "_PIPELINE_EDIT", "fields":[
+									{"name": "vrf_id"}
+									]}
+								]}
+							]}
+						]}
+					]}
+			]
+		}
 	}
 ]
