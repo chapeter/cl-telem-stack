@@ -15,44 +15,10 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 4,
+  "id": 1,
   "links": [],
   "panels": [
     {
-      "alert": {
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                50
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "alerting",
-        "for": "5m",
-        "frequency": "1m",
-        "handler": 1,
-        "name": "Leaf 1 CPU alert",
-        "noDataState": "no_data",
-        "notifications": []
-      },
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -155,15 +121,7 @@
           ]
         }
       ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "gt",
-          "value": 50
-        }
-      ],
+      "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
@@ -1007,6 +965,160 @@
       "timeShift": null,
       "title": "",
       "type": "bargauge"
+    },
+    {
+      "cacheTimeout": null,
+      "gridPos": {
+        "h": 8,
+        "w": 23,
+        "x": 0,
+        "y": 23
+      },
+      "id": 11,
+      "links": [],
+      "options": {
+        "displayMode": "basic",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "max": 5,
+            "min": 0
+          },
+          "mappings": [],
+          "override": {},
+          "thresholds": [
+            {
+              "color": "red",
+              "index": 0,
+              "value": null
+            },
+            {
+              "color": "#EAB839",
+              "index": 1,
+              "value": 1
+            },
+            {
+              "color": "green",
+              "index": 2,
+              "value": 2
+            }
+          ],
+          "values": false
+        },
+        "orientation": "vertical"
+      },
+      "targets": [
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "Producer"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "show bgp vrf all sessions",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "totalestablishedpeers"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Established BGP Neighbors",
+      "type": "bargauge"
+    },
+    {
+      "cacheTimeout": null,
+      "gridPos": {
+        "h": 8,
+        "w": 23,
+        "x": 0,
+        "y": 31
+      },
+      "id": 12,
+      "links": [],
+      "options": {
+        "displayMode": "basic",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "max": 5,
+            "min": 0
+          },
+          "mappings": [],
+          "override": {},
+          "thresholds": [
+            {
+              "color": "red",
+              "index": 0,
+              "value": null
+            },
+            {
+              "color": "#EAB839",
+              "index": 1,
+              "value": 1
+            },
+            {
+              "color": "green",
+              "index": 2,
+              "value": 2
+            }
+          ],
+          "values": false
+        },
+        "orientation": "vertical"
+      },
+      "targets": [
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "Producer"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "show ip ospf neighbors",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "TABLE_ctx__ROW_ctx__nbrcount"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Established OSPF Neighbors",
+      "type": "bargauge"
     }
   ],
   "refresh": false,
@@ -1017,7 +1129,7 @@
     "list": []
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
@@ -1046,7 +1158,7 @@
     ]
   },
   "timezone": "utc",
-  "title": "Test Network",
+  "title": "EVPN",
   "uid": "GMUT9xMWk",
-  "version": 4
+  "version": 3
 }

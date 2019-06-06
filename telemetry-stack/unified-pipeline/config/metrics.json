@@ -204,5 +204,44 @@
 	        ]}
 	    ]
 	  }
+	},
+	{
+		"basepath": "show bgp vrf all sessions",
+		"spec": {
+			"fields":[
+				{"name":"show bgp vrf all sessions", "tag":true},
+				{
+					"name": "",
+					"fields":
+						[
+							{"name": "totalestablishedpeers"},
+							{"name": "totalpeers"}
+						]
+				}
+			]
+		}
+	},
+	{
+		"basepath": "show ip ospf neighbors",
+		"spec": {
+			"fields":[
+				{"name":"show ip ospf neighbors", "tag":true},
+				{
+					"name": "",
+					"fields":
+						[
+							{"name": "TABLE_ctx", "fields":[
+								{"name":"", "fields":[
+									{"name":"ROW_ctx", "fields":[
+										{"name":"", "fields":[
+											{"name":"nbrcount"}
+											]}
+										]}
+									]}
+								]}
+						]
+				}
+			]
+		}
 	}
 ]
