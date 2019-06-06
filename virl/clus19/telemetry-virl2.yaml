@@ -6,7 +6,7 @@ lab:
   version: 0.0.2
 nodes:
   - id: n1
-    label: clus-test
+    label: telemetry-clus-test
     node_definition: ubuntu
     x: -700
     y: -350
@@ -46,7 +46,6 @@ nodes:
       packages:
         - python3
         - python3-pip
-        - docker
         - make
         # - default-jdk
 
@@ -58,11 +57,22 @@ nodes:
           owner: developer:developer
 
       runcmd:
-        - sudo ifconfig enp0s2 up 10.10.90.101 netmask 255.255.255.0
+        - sudo ifconfig enp0s2 up 10.10.90.215 netmask 255.255.255.0
         - sudo route add default gw 10.10.90.254 dev enp0s2
+        - curl -fsSL https://get.docker.com -o get-docker.sh; sh get-docker.sh
+        - curl -fsSL http://10.10.90.10/consul -o /usr/local/bin/consul; chmod +x /usr/local/bin/consul
+        - curl -fsSL http://10.10.90.10/consul-esm -o /usr/local/bin/consul-esm; chmod +x /usr/local/bin/consul-esm
+        - mkdir -p /etc/consul.d
+        - curl -fsSL http://10.10.90.10/consul.d/common.json -o /etc/consul.d/common.json
+        - curl -fsSL http://10.10.90.10/consul.d/test.json -o /etc/consul.d/test.json
+        # - curl -fsSL http://10.10.90.10/consul.d/server.json -o /etc/consul.d/server.json
+        - sudo systemctl daemon-reload
+        - sudo systemctl enable consul
+        - sudo systemctl start consul
         - sudo chown -R developer:developer /home/developer
         - sudo -u developer git clone https://github.com/chapeter/cl-telem-stack /home/developer/cl-telem-stack
         - pip3 install -r /home/developer/requirements.txt
+        - make -C /home/developer/cl-telem-stack lab
     image_definition: ubuntu
     tags: []
     interfaces:
@@ -103,7 +113,7 @@ nodes:
         label: port
         type: physical
   - id: n0
-    label: clus-prod
+    label: telemetry-clus-prod
     node_definition: ubuntu
     x: -750
     y: -100
@@ -143,7 +153,6 @@ nodes:
       packages:
         - python3
         - python3-pip
-        - docker
         - make
         # - default-jdk
 
@@ -155,11 +164,23 @@ nodes:
           owner: developer:developer
 
       runcmd:
-        - sudo ifconfig enp0s2 up 10.10.90.102 netmask 255.255.255.0
+        - sudo ifconfig enp0s2 up 10.10.90.225 netmask 255.255.255.0
         - sudo route add default gw 10.10.90.254 dev enp0s2
+        - curl -fsSL http://10.10.90.10/consul -o /usr/local/bin/consul; chmod +x /usr/local/bin/consul
+        - curl -fsSL http://10.10.90.10/consul-esm -o /usr/local/bin/consul-esm; chmod +x /usr/local/bin/consul-esm
+        - mkdir -p /etc/consul.d
+        - curl -fsSL http://10.10.90.10/consul.d/common.json -o /etc/consul.d/common.json
+        - curl -fsSL http://10.10.90.10/consul.d/prod.json -o /etc/consul.d/prod.json
+        # - curl -fsSL http://10.10.90.10/consul.d/test.json -o /etc/consul.d/test.json
+        # - curl -fsSL http://10.10.90.10/consul.d/server.json -o /etc/consul.d/server.json
+        - sudo systemctl daemon-reload
+        - sudo systemctl enable consul
+        - sudo systemctl start consul
+        - curl -fsSL https://get.docker.com -o get-docker.sh; sh get-docker.sh
         - sudo chown -R developer:developer /home/developer
         - sudo -u developer git clone https://github.com/chapeter/cl-telem-stack /home/developer/cl-telem-stack
         - pip3 install -r /home/developer/requirements.txt
+        - make -C /home/developer/cl-telem-stack lab
     image_definition: ubuntu
     tags: []
     interfaces:
