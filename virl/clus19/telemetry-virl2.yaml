@@ -6,13 +6,13 @@ lab:
   version: 0.0.2
 nodes:
   - id: n1
-    label: telemetry-clus-test
+    label: telemetry-test
     node_definition: ubuntu
     x: -700
     y: -350
     configuration: |-
       #cloud-config
-      hostname: telemetry-clus-test
+      hostname: telemetry
       user: developer
       password: C1sco12345
       groups: root
@@ -113,13 +113,13 @@ nodes:
         label: port
         type: physical
   - id: n0
-    label: telemetry-clus-prod
+    label: telemetry-prod
     node_definition: ubuntu
     x: -750
     y: -100
     configuration: |-
       #cloud-config
-      hostname: telemetry-clus-prod
+      hostname: telemetry
       user: developer
       password: C1sco12345
       groups: root
