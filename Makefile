@@ -8,34 +8,34 @@ clean-virl:
 	-@rm -Rf .virl/
 
 consul-test:
-	- curl -fsSL http://10.10.90.10/consul -o /usr/local/bin/consul; chmod +x /usr/local/bin/consul
-	- curl -fsSL http://10.10.90.10/consul-esm -o /usr/local/bin/consul-esm; chmod +x /usr/local/bin/consul-esm
+	- sudo curl -fsSL http://10.10.90.10/consul -o /usr/local/bin/consul; chmod +x /usr/local/bin/consul
+	- sudo curl -fsSL http://10.10.90.10/consul-esm -o /usr/local/bin/consul-esm; chmod +x /usr/local/bin/consul-esm
 	- mkdir -p /etc/consul.d
 
 	# consul service
-	- curl -fsSL http://10.10.90.10/systemd/consul.service -o /etc/systemd/system/consul.service
+	- sudo curl -fsSL http://10.10.90.10/systemd/consul.service -o /etc/systemd/system/consul.service
 
 	# configure DNS servers for consul appropriate environment (test/prod)
-	- curl -fsSL http://10.10.90.10/systemd/test.resolved.conf -o /etc/systemd/resolved.conf
-	- curl -fsSL http://10.10.90.10/consul.d/common.json -o /etc/consul.d/common.json
-	- curl -fsSL http://10.10.90.10/consul.d/test.json -o /etc/consul.d/test.json
+	- sudo curl -fsSL http://10.10.90.10/systemd/test.resolved.conf -o /etc/systemd/resolved.conf
+	- sudo curl -fsSL http://10.10.90.10/consul.d/common.json -o /etc/consul.d/common.json
+	- sudo curl -fsSL http://10.10.90.10/consul.d/test.json -o /etc/consul.d/test.json
 	- sudo systemctl daemon-reload
 	- sudo systemctl enable --now consul
 	- sudo systemctl enable --now consul-esm
 	- sudo systemctl restart systemd-resolved
 
 consul-prod:
-	- curl -fsSL http://10.10.90.10/consul -o /usr/local/bin/consul; chmod +x /usr/local/bin/consul
-	- curl -fsSL http://10.10.90.10/consul-esm -o /usr/local/bin/consul-esm; chmod +x /usr/local/bin/consul-esm
+	- sudo curl -fsSL http://10.10.90.10/consul -o /usr/local/bin/consul; chmod +x /usr/local/bin/consul
+	- sudo curl -fsSL http://10.10.90.10/consul-esm -o /usr/local/bin/consul-esm; chmod +x /usr/local/bin/consul-esm
 	- mkdir -p /etc/consul.d
 
 	# consul service
-	- curl -fsSL http://10.10.90.10/systemd/consul.service -o /etc/systemd/system/consul.service
+	- sudo curl -fsSL http://10.10.90.10/systemd/consul.service -o /etc/systemd/system/consul.service
 
 	# configure DNS servers for consul appropriate environment (test/prod)
-	- curl -fsSL http://10.10.90.10/systemd/prod.resolved.conf -o /etc/systemd/resolved.conf
-	- curl -fsSL http://10.10.90.10/consul.d/common.json -o /etc/consul.d/common.json
-	- curl -fsSL http://10.10.90.10/consul.d/prod.json -o /etc/consul.d/prod.json
+	- sudo curl -fsSL http://10.10.90.10/systemd/prod.resolved.conf -o /etc/systemd/resolved.conf
+	- sudo curl -fsSL http://10.10.90.10/consul.d/common.json -o /etc/consul.d/common.json
+	- sudo curl -fsSL http://10.10.90.10/consul.d/prod.json -o /etc/consul.d/prod.json
 	- sudo systemctl daemon-reload
 	- sudo systemctl enable --now consul
 	- sudo systemctl enable --now consul-esm
