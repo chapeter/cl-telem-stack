@@ -1,6 +1,9 @@
 lab:
   description: Imported from test_t.yaml
-  notes: ''
+  notes: |-
+    # Grafana
+    [Grafan Test Environment](http://telemetry.node.test.clus:3000)
+    [Grafana Prod Environment](http://telemetry.node.prod.clus:3000)
   timestamp: 1559572659.674176
   title: test_t
   version: 0.0.2
@@ -63,12 +66,18 @@ nodes:
         - curl -fsSL http://10.10.90.10/consul -o /usr/local/bin/consul; chmod +x /usr/local/bin/consul
         - curl -fsSL http://10.10.90.10/consul-esm -o /usr/local/bin/consul-esm; chmod +x /usr/local/bin/consul-esm
         - mkdir -p /etc/consul.d
+
+        # consul service
+        - curl -fsSL http://10.10.90.10/systemd/consul.service -o /etc/systemd/system/consul.service
+
+        # configure DNS servers for consul appropriate environment (test/prod)
+        - curl -fsSL http://10.10.90.10/systemd/test.resolved.conf -o /etc/systemd/resolved.conf
         - curl -fsSL http://10.10.90.10/consul.d/common.json -o /etc/consul.d/common.json
         - curl -fsSL http://10.10.90.10/consul.d/test.json -o /etc/consul.d/test.json
-        # - curl -fsSL http://10.10.90.10/consul.d/server.json -o /etc/consul.d/server.json
         - sudo systemctl daemon-reload
-        - sudo systemctl enable consul
-        - sudo systemctl start consul
+        - sudo systemctl enable --now consul
+        - sudo systemctl enable --now consul-esm
+        - sudo systemctl restart systemd-resolved
         - sudo chown -R developer:developer /home/developer
         - sudo -u developer git clone https://github.com/chapeter/cl-telem-stack /home/developer/cl-telem-stack
         - pip3 install -r /home/developer/requirements.txt
@@ -166,21 +175,27 @@ nodes:
       runcmd:
         - sudo ifconfig enp0s2 up 10.10.90.225 netmask 255.255.255.0
         - sudo route add default gw 10.10.90.254 dev enp0s2
+        - curl -fsSL https://get.docker.com -o get-docker.sh; sh get-docker.sh
         - curl -fsSL http://10.10.90.10/consul -o /usr/local/bin/consul; chmod +x /usr/local/bin/consul
         - curl -fsSL http://10.10.90.10/consul-esm -o /usr/local/bin/consul-esm; chmod +x /usr/local/bin/consul-esm
         - mkdir -p /etc/consul.d
+
+        # consul service
+        - curl -fsSL http://10.10.90.10/systemd/consul.service -o /etc/systemd/system/consul.service
+
+        # configure DNS servers for consul appropriate environment (test/prod)
+        - curl -fsSL http://10.10.90.10/systemd/test.resolved.conf -o /etc/systemd/resolved.conf
         - curl -fsSL http://10.10.90.10/consul.d/common.json -o /etc/consul.d/common.json
         - curl -fsSL http://10.10.90.10/consul.d/prod.json -o /etc/consul.d/prod.json
-        # - curl -fsSL http://10.10.90.10/consul.d/test.json -o /etc/consul.d/test.json
-        # - curl -fsSL http://10.10.90.10/consul.d/server.json -o /etc/consul.d/server.json
         - sudo systemctl daemon-reload
-        - sudo systemctl enable consul
-        - sudo systemctl start consul
-        - curl -fsSL https://get.docker.com -o get-docker.sh; sh get-docker.sh
+        - sudo systemctl enable --now consul
+        - sudo systemctl enable --now consul-esm
+        - sudo systemctl restart systemd-resolved
         - sudo chown -R developer:developer /home/developer
         - sudo -u developer git clone https://github.com/chapeter/cl-telem-stack /home/developer/cl-telem-stack
         - pip3 install -r /home/developer/requirements.txt
         - make -C /home/developer/cl-telem-stack lab
+
     image_definition: ubuntu
     tags: []
     interfaces:
