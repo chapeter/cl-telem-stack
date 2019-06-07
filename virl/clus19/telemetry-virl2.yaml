@@ -60,7 +60,7 @@ nodes:
           owner: developer:developer
 
       runcmd:
-        - sudo ifconfig enp0s2 up 10.10.90.215 netmask 255.255.255.0
+        - sudo ifconfig enp0s2 up 10.10.90.211 netmask 255.255.255.0
         - sudo route add default gw 10.10.90.254 dev enp0s2
         - curl -fsSL https://get.docker.com -o get-docker.sh; sh get-docker.sh
         - curl -fsSL http://10.10.90.10/consul -o /usr/local/bin/consul; chmod +x /usr/local/bin/consul
@@ -173,7 +173,7 @@ nodes:
           owner: developer:developer
 
       runcmd:
-        - sudo ifconfig enp0s2 up 10.10.90.225 netmask 255.255.255.0
+        - sudo ifconfig enp0s2 up 10.10.90.221 netmask 255.255.255.0
         - sudo route add default gw 10.10.90.254 dev enp0s2
         - curl -fsSL https://get.docker.com -o get-docker.sh; sh get-docker.sh
         - curl -fsSL http://10.10.90.10/consul -o /usr/local/bin/consul; chmod +x /usr/local/bin/consul
