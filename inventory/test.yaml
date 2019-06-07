@@ -1,0 +1,10 @@
+all:
+  vars:
+    pipeline: 10.10.90.210
+  hosts:
+    leaf1: leaf1.node.test.clus
+    leaf2: leaf2.node.test.clus
+    leaf3: leaf3.node.test.clus
+    leaf4: leaf4.node.test.clus
+    spine1: spine2.node.test.clus
+    spine2: spine2.node.test.clus

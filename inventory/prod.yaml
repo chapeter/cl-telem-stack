@@ -1,0 +1,10 @@
+all:
+  vars:
+    pipeline: 10.10.90.220
+  hosts:
+    leaf1: leaf1.node.prod.clus
+    leaf2: leaf2.node.prod.clus
+    leaf3: leaf3.node.prod.clus
+    leaf4: leaf4.node.prod.clus
+    spine1: spine2.node.prod.clus
+    spine2: spine2.node.prod.clus

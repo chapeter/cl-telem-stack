@@ -1,0 +1,5 @@
+---
+
+- name: Configure Telemetry
+  nxos_config:
+    src: nxos-clus-template.j2

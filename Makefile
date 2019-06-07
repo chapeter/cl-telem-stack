@@ -1,7 +1,7 @@
 clean: clean-stack
 
 clean-stack:
-	-@docker-compose -f telemetry-stack/docker-compose.yaml down
+	-@docker-compose -f telemetry-stack/docker-compose-$(server).yaml down
 
 clean-virl:
 	-@virl down
@@ -43,24 +43,26 @@ consul-prod:
 
 lab: stack stack-status
 
+
+
 stack: stack-pull stack-build stack-up
 
 stack-up:
-	docker-compose -f telemetry-stack/docker-compose.yaml up -d
+	docker-compose -f telemetry-stack/docker-compose-$(server).yaml up -d
 
 stack-build:
-	docker-compose -f telemetry-stack/docker-compose.yaml build
+	docker-compose -f telemetry-stack/docker-compose-$(server).yaml build
 
 stack-pull:
-	docker-compose -f telemetry-stack/docker-compose.yaml pull
+	docker-compose -f telemetry-stack/docker-compose-$(server).yaml pull
 
 stack-status:
-	docker-compose -f telemetry-stack/docker-compose.yaml ps
+	docker-compose -f telemetry-stack/docker-compose-$(server).yaml ps
 
 stage: stack-pull stack-build
 
 tap:
-	docker-compose -f telemetry-stack/docker-compose.yaml exec unified-pipeline tail -n 1000 telemetry_model_raw.txt
+	docker-compose -f telemetry-stack/docker-compose-$(server).yaml exec unified-pipeline tail -n 1000 telemetry_model_raw.txt
 
 # virl:
 # 	@virl up --provision

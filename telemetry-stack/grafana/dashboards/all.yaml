@@ -1,5 +1,0 @@
-- name: 'evpn'
-  folder: ''
-  type: 'file'
-  options:
-    folder: '/etc/grafana/dashboards'
