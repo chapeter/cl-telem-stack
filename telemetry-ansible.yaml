@@ -1,5 +1,23 @@
 ---
 
-- name: Configure Telemetry
-  nxos_config:
-    src: nxos-clus-template.j2
+- name: "TELEMETRY STACK DETECTED DROPS - INCREATE VIDEO BANDWIDTH"
+  hosts: all
+  gather_facts: no
+
+
+  tasks:
+    - name: Get Number of VRFs
+      nxos_command:
+        commands: "show vrf | exclude VRF-Name | count"
+      register: vrf_count
+    - debug:
+        var: vrf_count["stdout"][0]
+    - name: "UPDATE GUI WITH NEW VRF Count"
+      uri:
+        url: "http://grafana.node.test.clus:8086/write?db=netdevops"
+        method: POST
+        headers:
+          Content-Type: "application/json"
+        body: 'tenants,host={{ansible_host}} value={{vrf_count["stdout"][0]}}'
+        register: results
+        status_code: 204
