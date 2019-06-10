@@ -7,3 +7,5 @@ all:
     leaf4.node.test.clus:
     spine1.node.test.clus:
     spine2.node.test.clus:
+  vars:
+    env: test

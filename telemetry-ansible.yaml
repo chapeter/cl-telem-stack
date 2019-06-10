@@ -10,11 +10,11 @@
       nxos_command:
         commands: "show vrf | exclude VRF-Name | count"
       register: vrf_count
-    - debug:
-        var: vrf_count["stdout"][0]
+    # - debug:
+    #     var: vrf_count["stdout"][0]
     - name: "UPDATE GUI WITH NEW VRF Count"
       uri:
-        url: "http://grafana.node.test.clus:8086/write?db=netdevops"
+        url: "http://grafana.node.{{env}}.clus:8086/write?db=netdevops"
         method: POST
         headers:
           Content-Type: "application/json"
